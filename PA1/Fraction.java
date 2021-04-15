@@ -24,9 +24,11 @@ class Fraction{
                 Fraction result = new Fraction(1);
                 //denom of result is set to the product of n.denom and (my).denom
                 result.denom = denom * n.denom;
-                //result.num =
+                //numerator is set to the product of the numerators
                 result.num = num * n.num;
+		//reduce the resilt
 		result = result.reduce();
+		//return the result
                 return(result);
         }
         //Division function. multiplies first (my) numerator by 2nd (n) denominator and does the same for the first denominator vise versa.
@@ -79,24 +81,41 @@ class Fraction{
                 }
         }
 
-        //method adds Fractions by cross multiplying the n
+        //method returns Fraction value. adds Fractions by multiplyiing the denoms of (my) denom and n.denom and cross multiplies and adds the numerators by multiplying each numerator with the opposite denom
         public Fraction add(Fraction n){
+		//create new Fraction
                 Fraction result = new Fraction();
+		//cross multiply the numerators
                 result.num = num * n.denom + n.num * denom;
+		//nultiply the denominators
                 result.denom = denom * n.denom;
+		//reduce the fraction
+		result = result.reduce();
+		//return the result
                 return(result);
         }
-        public Fraction sub(Fraction n){
+	//method returns Fraction value adds Fractions by multiplyiing the denoms of (my) denom and n.denom and cross multiplies and subtracts the numerators by multiplying each numerator with the opposite denom
+	public Fraction sub(Fraction n){
+		//create new Fraction object
                 Fraction result = new Fraction();
+		//cross multiply and subtract the numerators
                 result.num = num * n.denom - n.num * denom;
+		//multiply the donminators
                 result.denom = denom * n.denom;
+		//reduce
+		result = result.reduce();
+		//return the result
                 return(result);
         }
+	//returns interger value by setting return value to numerator(my num)
         public int getNum(){
+		//set int a to num and return a
                 int a = num;
                 return(a);
         }
+	//returns interger value by setting return value to denominator(my num)
         public int getDenom(){
+		//set int a to num and return a
                 int a = denom;
                 return(a);
         }
