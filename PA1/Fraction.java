@@ -11,14 +11,12 @@ class Fraction{
         {       //mumerator is set to num,denominator is set to 1
                 num = num2;
                 denom = 1;
-                System.out.println("Construct Complete");
         }
         //this constructor is used to cr/eate fractions that aren't whole
         public Fraction(int num2,int denom2)
         {       //Numerator is set to num, denominator is set to denom;
                 num = num2;
                 denom = denom2;
-                System.out.println("Construct Complete");
         }
         //multiplication function. multiplys numerator 1 by numerator 2, and multiplies denominator 1 by denominator 2; value is saved in new Fraction called result and returned
         public Fraction mul(Fraction n){
@@ -28,6 +26,7 @@ class Fraction{
                 result.denom = denom * n.denom;
                 //result.num =
                 result.num = num * n.num;
+		result = result.reduce();
                 return(result);
         }
         //Division function. multiplies first (my) numerator by 2nd (n) denominator and does the same for the first denominator vise versa.
@@ -101,6 +100,32 @@ class Fraction{
                 int a = denom;
                 return(a);
         }
+	private Fraction reduce(){
+		int input1 = num;
+		int num_2 = input1;
+		int input2  = denom;
+		int denom_2 = input2;
+		int rem;
+		int gcd;
+		int answer;
+		while(1 == 1){
+			int ecd = input1/input2;
+			rem = input1 % input2;
+			System.out.println(input1 + " = " + input2 + "*" + ecd + " plus " + rem);
+			//remainder error
+			if(rem == 0 && input2 != 0){
+				gcd = input2;
+				int a,b;
+                		a = num_2/gcd;
+                		b = denom_2/gcd;
+                		Fraction result = new Fraction(a,b);
+                		return(result);
+			}
+			input1 = input2;
+			input2 = rem;
+		}
+	}
+		
 }
 
 
