@@ -1,12 +1,15 @@
+//Dennis Balan, 4/15/2021, CSE 223. The Fraction class represents fractions as an object in Java and uses 2 internal variables = num and denom, which represent the numerator and the denominator of the function respecively. It performs basic mathematical operations (multiplication, dvision, addisition and subtraction) and reduces them to the simplest form. It also converts Fractions to string and double formats and can return the num and denom values
+//Important: (my) in comments refers to the object the method is being applied to
 class Fraction{
         //class consists of 2 ints, one numerator(int num), one deominator(int denom). Those two variables create the Fraction
         int num,denom;
         //constructor
-        //this constructor is used to create a fraction version of a whole number
+        //this constructor is used to create a fraction version of a 1. It is default
         public Fraction(){
                 num = 1;
                 denom = 1;
         }
+	//Constructor used to create a whole number
         public Fraction(int num2)
         {       //mumerator is set to num,denominator is set to 1
                 num = num2;
@@ -17,8 +20,10 @@ class Fraction{
         {       //Numerator is set to num, denominator is set to denom;
                 num = num2;
                 denom = denom2;
+		//reduce
+		//this.reduce();
         }
-        //multiplication function. multiplys numerator 1 by numerator 2, and multiplies denominator 1 by denominator 2; value is saved in new Fraction called result and returned
+        //multiplication function. multiplys numerator 1 by numerator 2, and multiplies denominator 1 by denominator 2; value is saved in new Fraction called result, simplifoed and returned as a Fractiom. Also returns a NaN (1/0) if denom of any number is 0
         public Fraction mul(Fraction n){
                 //create new fraction object result
                 Fraction result = new Fraction(1);
@@ -37,7 +42,7 @@ class Fraction{
 		//return the result
                 return(result);
         }
-        //Division function. multiplies first (my) numerator by 2nd (n) denominator and does the same for the first denominator vise versa.
+        //Division function. multiplies first (my) numerator by 2nd (n) denominator and does the same for the first denominator vise versa. Simplifies and returned as a Fraction Object. If denom of any number is 0, returns NaN (1/0)
         public Fraction div(Fraction n){
                 //new Fraction named result, this is the return value
                 Fraction result = new Fraction();
@@ -56,7 +61,7 @@ class Fraction{
                 //retur result
                 return(result);
         }
-        //method converts fraction to double
+        //method converts fraction to double and returns double. If denominator is 0, returns Double NaN
         public double toDouble(){
                 //double num_d and denom_d are converted ints from the Fraction class//
                 double num_d = num;
@@ -70,7 +75,7 @@ class Fraction{
                 //return the result//
                 return(result);
         }
-        //create a string version of a Fraction object, and format if needed
+        //create a string version of a Fraction object, and format if needed and returns a string. If Denominator is 0, returns "NaN"
         public String toString(){
                 //if both num and denom are negative, convert all to positive
                 if(denom < 0 && num < 0){
@@ -103,7 +108,7 @@ class Fraction{
                 }
         }
 
-        //method returns Fraction value. adds Fractions by multiplyiing the denoms of (my) denom and n.denom and cross multiplies and adds the numerators by multiplying each numerator with the opposite denom
+        //method returns Fraction value. adds Fractions by multiplyiing the denoms of (my) denom and n.denom and cross multiplies and adds the numerators by multiplying each numerator with the opposite denominators. Simplifies and returns Fraction Value. If denominator of any number is 0 returns a 1/0 (NaN)
         public Fraction add(Fraction n){
 		//create new Fraction
                 Fraction result = new Fraction();
@@ -122,7 +127,7 @@ class Fraction{
 		//return the result
                 return(result);
         }
-	//method returns Fraction value adds Fractions by multiplyiing the denoms of (my) denom and n.denom and cross multiplies and subtracts the numerators by multiplying each numerator with the opposite denom
+	//method returns Fraction value adds Fractions by multiplyiing the denoms of (my) denom and n.denom and cross multiplies and subtracts the numerators by multiplying each numerator with the opposite denom.Simplifies the return value and returns a 1/0(NaN if any denominator is 0
 	public Fraction sub(Fraction n){
 		//create new Fraction object
                 Fraction result = new Fraction();
@@ -153,7 +158,7 @@ class Fraction{
                 int a = denom;
                 return(a);
         }
-	//returns a Fraction. reduce a fraction using euclid's algorithm. input1 and input2 are inputs for eculid's algorithm
+	//returns a reduced Fraction. reduce a fraction using euclid's algorithm. input1 and input2 are inputs for eculid's algorithm. rem is the remainder. returns a 1/0(Nan) if denom is 0, and returns a 1/0 if num is 0
 	private Fraction reduce(){
 		//set input1 for eculi's algorithm as the numerator
 		int input1 = num;
@@ -167,9 +172,14 @@ class Fraction{
 		int rem,gcd;
 		//infinite loop
 		while(1 == 1){
-			//NaN check
+			//NaN check, returns a 1/0 if denom is 0
 			if(input2 == 0){
 				Fraction result = new Fraction(1,0);
+				return(result);
+			}
+			//0/1 check, returns 1/0 if num is 0
+			if(input1 == 0){
+				Fraction result = new Fraction(0,1);
 				return(result);
 			}
 			//divide input1 by input2
