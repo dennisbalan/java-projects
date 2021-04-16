@@ -22,6 +22,12 @@ class Fraction{
         public Fraction mul(Fraction n){
                 //create new fraction object result
                 Fraction result = new Fraction(1);
+		//Nan return,creates Fraction 1/0 and returns it
+		if(denom == 0 || n.denom == 0){
+			result.num = 1;
+			result.denom = 0;
+			return(result);
+		}
                 //denom of result is set to the product of n.denom and (my).denom
                 result.denom = denom * n.denom;
                 //numerator is set to the product of the numerators
@@ -35,10 +41,18 @@ class Fraction{
         public Fraction div(Fraction n){
                 //new Fraction named result, this is the return value
                 Fraction result = new Fraction();
+		//Nan return. if any denom = 0, set Fraction to 1/0 and return
+		if(denom == 0 || n.denom == 0){
+                        result.num = 1;
+                        result.denom = 0;
+                        return(result);
+                }
                 //result.num is my num multiplied by n denom
                 result.num = num * n.denom;
                 //result.denom is my denom multiplied by n num
                 result.denom = denom * n.num;
+		//reduce
+		result = result.reduce();
                 //retur result
                 return(result);
         }
@@ -47,6 +61,10 @@ class Fraction{
                 //double num_d and denom_d are converted ints from the Fraction class//
                 double num_d = num;
                 double denom_d = denom;
+		//Nan check, if denom 0 returm a double.Nan
+		if(denom_d == 0){
+			return(Double.NaN);
+		}
                 //result is the num in double form divided by the denominator in double form//
                 double result = num_d/denom_d;
                 //return the result//
@@ -85,6 +103,12 @@ class Fraction{
         public Fraction add(Fraction n){
 		//create new Fraction
                 Fraction result = new Fraction();
+		//Nan return. if any denom = 0, set Fraction to 1/0 and return
+                if(denom == 0 || n.denom == 0){
+                        result.num = 1;
+                        result.denom = 0;
+                        return(result);
+                }
 		//cross multiply the numerators
                 result.num = num * n.denom + n.num * denom;
 		//nultiply the denominators
@@ -98,6 +122,12 @@ class Fraction{
 	public Fraction sub(Fraction n){
 		//create new Fraction object
                 Fraction result = new Fraction();
+		//Nan return. if any denom = 0, set Fraction to 1/0 and return
+                if(denom == 0 || n.denom == 0){
+                        result.num = 1;
+                        result.denom = 0;
+                        return(result);
+                }
 		//cross multiply and subtract the numerators
                 result.num = num * n.denom - n.num * denom;
 		//multiply the donminators
@@ -119,28 +149,41 @@ class Fraction{
                 int a = denom;
                 return(a);
         }
+	//returns a Fraction. reduce a fraction using euclid's algorithm. input1 and input2 are inputs for eculid's algorithm
 	private Fraction reduce(){
+		//set input1 for eculi's algorithm as the numerator
 		int input1 = num;
+		//set num_2 to input1
 		int num_2 = input1;
+		//set input 2 for euclid's algorithm as the denominator
 		int input2  = denom;
+		//set denom_2 as input2
 		int denom_2 = input2;
-		int rem;
-		int gcd;
-		int answer;
+		//create vars rem (remainder) and gcd (greatest common divisor)
+		int rem,gcd;
+		//infinite loop
 		while(1 == 1){
+			//divide input1 by input2
 			int ecd = input1/input2;
+			//find the modulo of input1 and input2
 			rem = input1 % input2;
-			System.out.println(input1 + " = " + input2 + "*" + ecd + " plus " + rem);
-			//remainder error
+			/*System.out.println(input1 + " = " + input2 + "*" + ecd + " plus " + rem);*/
+			//activate if remainder is 0
 			if(rem == 0 && input2 != 0){
+				//gcd is set to input2
 				gcd = input2;
+				//create vars a,b (new num and new denom respectively and divide both by the gcd
 				int a,b;
                 		a = num_2/gcd;
                 		b = denom_2/gcd;
+				//create new Fraction result using a and b as numerator and deonimators respectively
                 		Fraction result = new Fraction(a,b);
+				//return result
                 		return(result);
 			}
+			//input1 is resr ro input2
 			input1 = input2;
+			//input2 is rest to remainder
 			input2 = rem;
 		}
 	}
