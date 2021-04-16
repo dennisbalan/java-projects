@@ -92,6 +92,10 @@ class Fraction{
                         //return the string result
                         return(result);
                 }
+		//if denom is 0,return string NaN
+		else if(denom == 0){
+			return("NaN");
+		}
                 else{
                         //just combine the strings anf return the value
                         String result = (num + "/" + denom);
@@ -163,6 +167,11 @@ class Fraction{
 		int rem,gcd;
 		//infinite loop
 		while(1 == 1){
+			//NaN check
+			if(input2 == 0){
+				Fraction result = new Fraction(1,0);
+				return(result);
+			}
 			//divide input1 by input2
 			int ecd = input1/input2;
 			//find the modulo of input1 and input2
