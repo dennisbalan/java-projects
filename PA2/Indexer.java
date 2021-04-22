@@ -4,6 +4,7 @@ import java.util.Hashmap
 import java.util.LinkedList
 class Indexer{
 	private Hashmap <String, LinkedList<Integer>> index;
+	private boolean Flag;
 	public Indexer(){
 	}
 	public boolean processFile(String filename){
@@ -14,6 +15,7 @@ class Indexer{
 		}
 		catch(Exception e){
 			System.out.println("ERROR");
+			Flag == false;
 			return false;
 		}
 	
@@ -22,19 +24,22 @@ class Indexer{
 		while(sc.hasNext()){
 			String temp=sc.next();	
 			System.out.println("word" + "num" + " is " + temp);
-			addReference(temp,num);
+			temp = cleanupWord(temp);
 			if(!temp.equals("")){
 				num++;
 			}
+			addReference(temp,num);
 		}
 		sc.close();
+		Flag == true;
 		return true;
 	}
 	//-1 not done right now
 	public int numberOfInstances(String word){
+			if(Flag == false){
+				return -1;
+			}
 			if(index.containsKey(word) == true){
-				//	if(processFile() == false ){
-				
 			      //return size of Linked Listi
 				LinkedList a = index.get(word);
 				return(a.sizeof());				      
@@ -44,12 +49,17 @@ class Indexer{
 			}
 	}
 	public int locationOf(String word, int instanceNum){
+		if(Flag == false){
+			return -1;
+		}
+		int a = index.get(word).get(instanceNum);
 		
 	}
 	public int numberOfWords(){
 		return(index.size())
 	}
 	public String toString(){
+		return(index.toString());
 	}
 	private String cleanupWord(String word){
 		String out = "";
