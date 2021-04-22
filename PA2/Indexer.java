@@ -1,37 +1,37 @@
-import java.util.scanner
-import java.io.File
-import java.util.Hashmap
-import java.util.LinkedList
+import java.util.Scanner;
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedList;
 class Indexer{
-	private Hashmap <String, LinkedList<Integer>> index;
+	private HashMap <String, LinkedList<Integer>> index;
 	private boolean Flag;
 	public Indexer(){
 	}
 	public boolean processFile(String filename){
 		
-		scanner sc;
+		Scanner sc;
 		try{
 			sc = new Scanner(new File(filename));
 		}
 		catch(Exception e){
 			System.out.println("ERROR");
-			Flag == false;
+			Flag = false;
 			return false;
 		}
 	
 		//map = new HashMap <String,LinkedList<Integer>>();
-		int num;
+		int num = 0;
 		while(sc.hasNext()){
 			String temp=sc.next();	
-			System.out.println("word" + "num" + " is " + temp);
 			temp = cleanupWord(temp);
+			System.out.println("word" + "is " + temp + "num is" + num);
 			if(!temp.equals("")){
 				num++;
 			}
 			addReference(temp,num);
 		}
 		sc.close();
-		Flag == true;
+		Flag = true;
 		return true;
 	}
 	//-1 not done right now
@@ -42,7 +42,7 @@ class Indexer{
 			if(index.containsKey(word) == true){
 			      //return size of Linked Listi
 				LinkedList a = index.get(word);
-				return(a.sizeof());				      
+				return(a.size());				      
 			}
 			else{
 				return(0);
@@ -53,34 +53,44 @@ class Indexer{
 			return -1;
 		}
 		int a = index.get(word).get(instanceNum);
+		return(a);
 		
 	}
 	public int numberOfWords(){
-		return(index.size())
+		if(Flag == false){
+			return -1;
+		}
+		return(index.size());
 	}
 	public String toString(){
+		if(Flag == false){
+			return null;
+		}
 		return(index.toString());
 	}
 	private String cleanupWord(String word){
 		String out = "";
+		int i;
 		for(i = 0; i < word.length();i++){
-			char c = word.charAt();
-			if(c.isLetter() == true){
-				out = out + c.toUpperCase();
+			char c = word.charAt(i);
+			if(Character.isLetter(c)){
+				out = out + word.charAt(i);
 			}
 		}
 		return(out); 
 	}
 	private void addReference(String word, int location){
 		if(numberOfInstances(word) <= 0){
-			LinkedList a = new LinkedList<Interger>();
+			LinkedList a = new LinkedList<Integer>();
 			a.add(location);
 			index.put(word,a);
+			System.out.println("Success");
 		}
 		else{
 			index.get(word).add(location);
 		}
 	}
+}
 	
 
 
