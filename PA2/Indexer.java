@@ -1,7 +1,14 @@
+/*
+	Dennis Balan 4/22/2021, CSE 223 PA3 
+      	Indexer scans a textfile and creates a hashMap that stores a string (that stores a word), and a Linked List(that stores the loocations of the word). The Indexer uses a processFile() along with the private cleanupWord() and addReference turns a textfile stores the input of word, as well as their index(es) in the scanned file into  the hashmap called index with two fields <string word>(where the cleaned, capitilized word is stored) and <LinkedList<int>> (where the locations of the indexes are stored). The class has public methods toString() (converts index to word),numberOfWords(total number of words in the Linked List), numberOfInstances() (the number of ttimes a word appears in index), locationOf() (finds the n (int input) instance of a word in the linked list the word is a key to)
+*/
+
+//import Scanner, File, HashMap and LinkedList classes 
 import java.util.Scanner;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
+//class here 
 class Indexer{
 	//Hashmap called index created to store the word as a key, and locations in index in the linked list
 	private HashMap <String, LinkedList<Integer>> index;
@@ -10,7 +17,7 @@ class Indexer{
 	//constructor, constructs the Indexer
 	public Indexer(){
 	}
-	//processes a File inputi(String filename) and turns that input into a string, and uses a for loop to create to send the file content to the Hashmap. Uses other methods in this class to clean up the word from non-characters(claenupWord) and add the linked list with the index number of the word. Return true for success and false for failure. Flag is false for not being done or for errors, true for being done in this function
+	//processes a File inputi(String filename) and turns that input into a string, and uses a for loop to create to send the file content to the Hashmap. Uses other methods in this class to clean up the word from non-characters(claenupWord) and add the linked list with the index number of the word. Return true for success and false for failure. Flag is false for not being done or for errors, true for being done in this function. The class has public methods toString() (converts index to word),numberOfWords(total number of words in the Linked List 
 	public boolean processFile(String filename){
 		//create Scanner object sc
 		Scanner sc;
@@ -107,27 +114,42 @@ class Indexer{
 		//use the .toStrung() method to convert index to string and return it
 		return(index.toString());
 	}
+	//cleanupWord takes an input of String word to clean it up from non-Letters and returns the cleaned String
 	private String cleanupWord(String word){
+		//create empty string called output
 		String out = "";
+		//create iterator int i
 		int i;
+		//for loop that traverses that the length of the word to clean the word
 		for(i = 0; i < word.length();i++){
+			//set char c to character at position i
 			char c = word.charAt(i);
+			//if c is a letter, add an uppercaseversion of it to the the empty string
 			if(Character.isLetter(c)){
 				out = out + Character.toUpperCase(c);
 			}
 		}
+		//return output
 		return(out); 
 	}
+	//adds 2 inputs,char word and int location into index. Flag is temporarily set to help access some other functions. If the word has not been caught in the file yet, a Linked List is created, and the location is added to the Linked list. The Linked List and word are added into index, word is the key and the Linked List is the value. If a word has already been used in index,the linked list keyed by word recieves location, which is added to the Linked List, after addReference is done, Flag is set to false
 	private void addReference(String word, int location){
+		//Flag set to true temporarily
 		Flag = true;
+		//If there is no instance of the word in index, a new Linked List is created. The Linked List is loaded with the location and is added to the hash along with the word. 
 		if(numberOfInstances(word) < 1){
+			//Initialaize new Linked List of integers a
 			LinkedList a = new LinkedList<Integer>();
+			//add location to a
 			a.add(location);
+			//add word as key,a as location
 			index.put(word,a);
 		}
+		//Otherwise,if word has apperared already in the index, use word as a key in index to access the Linked List needed to add location into the Linked list
 		else if(numberOfInstances(word) > 0){
 			index.get(word).addLast(location);
 		}
+		//set Flag to false
 		Flag = false;
 	}
 }
